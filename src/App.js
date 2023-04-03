@@ -1,7 +1,8 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./css/style.scss";
 
-import Home from "./Home";
+import IntroPage from "./IntroPage";
+import Todo from "./Todo";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
 
@@ -10,7 +11,8 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route ex path="/" element={<IntroPage />} />
+          <Route path="/todo" element={<Todo />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
         </Routes>
