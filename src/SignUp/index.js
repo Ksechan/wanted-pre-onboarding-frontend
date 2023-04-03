@@ -12,6 +12,12 @@ const SignUp = () => {
   });
   const [disabled, setDisabled] = useState(true);
 
+  useEffect(() => {
+    if (localStorage.getItem("token") !== null) {
+      navigation("/todo");
+    }
+  }, []);
+
   const { email, password } = inputs;
 
   const onChange = (e) => {
@@ -34,6 +40,9 @@ const SignUp = () => {
     axios({
       url: `${API_URL}/auth/signup`,
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
       data: {
         email: email,
         password: password,
