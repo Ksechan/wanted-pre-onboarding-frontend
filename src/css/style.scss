@@ -1,4 +1,4 @@
-@import './reset.scss';
+@import "./reset.scss";
 
 $--color-text-gray: #c9d1d9;
 $--color-light-gray: #666666;
@@ -6,7 +6,7 @@ $--color-gray: #4d4d4d;
 $--color-dark-gray: #333333;
 $--color-purple: #4b0082;
 $--color-bg: #161b22;
-$--color-border: #212D26;
+$--color-border: #212d26;
 
 .sign-title-wrap {
   width: 100%;
@@ -97,5 +97,25 @@ $--color-border: #212D26;
     color: $--color-text-gray;
     text-align: center;
     text-decoration: underline;
+  }
+}
+
+.intro-block {
+  width: 308px;
+  text-align: center;
+  margin: 82px auto 0;
+  h1 {
+    color: #ffffff;
+    margin-bottom: 30px;
+  }
+
+  button {
+    width: 300px;
+    height: 32px;
+    font-size: 18px;
+    background-color: $--color-purple;
+    border-radius: 6px;
+    color: #ffffff;
+    margin-bottom: 10px;
   }
 }
