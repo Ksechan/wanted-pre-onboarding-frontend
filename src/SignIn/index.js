@@ -1,12 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { AiOutlineYahoo } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { API_URL } from "../API";
 
 const SignIn = () => {
+  const navigation = useNavigate();
   const [inputs, setInputs] = useState({
     email: "",
     password: "",
   });
   const [disabled, setDisabled] = useState(true);
+
+  useEffect(() => {
+    if (localStorage.getItem("token") !== null) {
+      navigation("/todo");
+    }
+  }, []);
 
   const { email, password } = inputs;
 
@@ -25,6 +35,34 @@ const SignIn = () => {
       setDisabled(true);
     }
   }, [email, password]);
+
+  const signinHandler = () => {
+    axios({
+      url: `${API_URL}/auth/signin`,
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: {
+        email: email,
+        password: password,
+      },
+    })
+      .then((result) => {
+        localStorage.setItem("token", result.data.access_token);
+        console.log(result.data.access_token);
+        navigation("/todo");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const onKeyDown = (e) => {
+    if (e.key === "Enter") {
+      signinHandler();
+    }
+  };
   return (
     <div>
       <div className="sign-title-wrap">
@@ -35,28 +73,10 @@ const SignIn = () => {
       </div>
       <div className="sign-block">
         <span>Email address</span>
-        <input
-          name="email"
-          value={email}
-          onChange={onChange}
-          data-testid="email-input"
-        />
+        <input name="email" value={email} onChange={onChange} data-testid="email-input" />
         <span>Password</span>
-        <input
-          name="password"
-          type="password"
-          value={password}
-          onChange={onChange}
-          data-testid="password-input"
-        />
-        <button
-          className={`${disabled ? " disabled" : ""}`}
-          disabled={disabled}
-          onClick={() => {
-            console.log("asdf");
-          }}
-          data-testid="signin-button"
-        >
+        <input name="password" type="password" value={password} onChange={onChange} data-testid="password-input" onKeyDown={onKeyDown} />
+        <button className={`${disabled ? " disabled" : ""}`} disabled={disabled} onClick={signinHandler} data-testid="signin-button">
           Sign in
         </button>
       </div>
