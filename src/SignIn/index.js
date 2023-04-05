@@ -49,8 +49,7 @@ const SignIn = () => {
       },
     })
       .then((result) => {
-        localStorage.setItem("token", result.data.access_token);
-        console.log(result.data.access_token);
+        localStorage.setItem("token", "Bearer " + result.data.access_token);
         navigation("/todo");
       })
       .catch((error) => {
