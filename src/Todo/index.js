@@ -1,8 +1,201 @@
-import React from "react";
-import { AiOutlineYahoo } from "react-icons/ai";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+
+import { API_URL } from "../API";
 
 const Todo = () => {
-  return <div>todo</div>;
+  const navigation = useNavigate();
+  const token = localStorage.getItem("token");
+  const [todos, setTodos] = useState([]);
+  const [visibleModify, setVisibleModify] = useState(null);
+  const [todoValue, setTodoValue] = useState({
+    newTodo: "",
+    modifyTodo: "",
+  });
+
+  const { newTodo, modifyTodo } = todoValue;
+
+  const onChange = (e) => {
+    const { value, name } = e.target;
+    setTodoValue({
+      ...todoValue,
+      [name]: value,
+    });
+  };
+
+  const onGetTodo = () => {
+    axios({
+      url: `${API_URL}/todos`,
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token,
+      },
+    })
+      .then((result) => {
+        if (result.status === 200) {
+          setTodos(result.data);
+          console.log("asdf");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const onCreateTodo = () => {
+    axios({
+      url: `${API_URL}/todos`,
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token,
+      },
+      data: {
+        todo: newTodo,
+      },
+    })
+      .then((result) => {
+        if (result.status === 201) {
+          onGetTodo();
+          setTodoValue({
+            ...todoValue,
+            newTodo: "",
+          });
+        }
+      })
+      .catch((error) => console.log(error));
+  };
+
+  const onModifyTodo = (id, value, isChecked) => {
+    axios({
+      url: `${API_URL}/todos/${id}`,
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token,
+      },
+      data: {
+        todo: value,
+        isCompleted: isChecked,
+      },
+    })
+      .then((result) => {
+        if (result.status === 200) {
+          setVisibleModify(null);
+          onGetTodo();
+        }
+      })
+      .catch((error) => console.log(error));
+  };
+
+  const onDeleteTodo = (id) => {
+    axios({
+      url: `${API_URL}/todos/${id}`,
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token,
+      },
+    })
+      .then((result) => {
+        if (result.status === 204) {
+          onGetTodo();
+        }
+      })
+      .catch((error) => console.log(error));
+  };
+
+  const onVisibleModifyTodo = (id, todo) => {
+    setVisibleModify(id);
+    setTodoValue({
+      ...todoValue,
+      modifyTodo: todo,
+    });
+  };
+
+  const onKeyDown = (e) => {
+    if (e.key === "Enter" && !e.nativeEvent.isComposing) {
+      onCreateTodo();
+    }
+  };
+
+  useEffect(() => {
+    if (token) {
+      onGetTodo();
+    } else {
+      alert("로그인을 먼저 해주세요.");
+      navigation("/signin");
+    }
+  }, []);
+
+  return (
+    <div className="todo-block">
+      <h2>ToDooYa</h2>
+      <div className="new-todo">
+        <input name="newTodo" value={newTodo} onChange={onChange} data-testid="new-todo-input" autoFocus placeholder="what's your todo" onKeyDown={onKeyDown} />
+        <button data-testid="new-todo-add-button" onClick={onCreateTodo} disabled={newTodo === ""} className={`${newTodo === "" ? " disabled" : ""}`}>
+          add todo
+        </button>
+      </div>
+      <ul className="todo-list">
+        {todos.map((item) => {
+          return (
+            <li key={item.id}>
+              <label>
+                <input
+                  type="checkbox"
+                  value={item.isCompleted}
+                  checked={item.isCompleted}
+                  onChange={(e) => {
+                    onModifyTodo(item.id, item.todo, e.target.checked);
+                  }}
+                />
+                <span>{item.todo}</span>
+              </label>
+              <button
+                data-testid="modify-button"
+                onClick={() => {
+                  onVisibleModifyTodo(item.id, item.todo);
+                }}
+              >
+                수정
+              </button>
+              <button
+                data-testid="delete-button"
+                onClick={() => {
+                  onDeleteTodo(item.id);
+                }}
+              >
+                삭제
+              </button>
+              {visibleModify === item.id ? (
+                <div className="modify-todo">
+                  <input name="modifyTodo" value={modifyTodo} onChange={onChange} data-testid="modify-input" autoFocus />
+                  <button
+                    data-testid="submit-button"
+                    onClick={() => {
+                      if (visibleModify === null) {
+                        onModifyTodo(item.id, item.todo, item.isCompleted);
+                      } else {
+                        onModifyTodo(item.id, modifyTodo, item.isCompleted);
+                      }
+                    }}
+                  >
+                    제출
+                  </button>
+                  <button data-testid="cancel-button" onClick={() => setVisibleModify(null)}>
+                    취소
+                  </button>
+                </div>
+              ) : null}
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
 };
 
 export default Todo;
