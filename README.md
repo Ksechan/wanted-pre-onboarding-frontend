@@ -21,5 +21,8 @@
 
 3. 자유롭게 todo list를 작성합니다
 
+---
 
-[ 원티드 선발 과제 배포 링크 ](https://wanted-pre-onboarding-frontend-lime.vercel.app/)
+## 원티드 선발 과제 배포링크
+
+[ 원티드 선발 과제 배포링크 ](https://wanted-pre-onboarding-frontend-lime.vercel.app/)
