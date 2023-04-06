@@ -121,6 +121,12 @@ const Todo = () => {
     }
   };
 
+  const onModifyKeyDown = (e, id, value, isChecked) => {
+    if (e.key === "Enter" && !e.nativeEvent.isComposing) {
+      onModifyTodo(id, value, isChecked);
+    }
+  };
+
   useEffect(() => {
     if (token) {
       onGetTodo();
@@ -140,56 +146,85 @@ const Todo = () => {
         </button>
       </div>
       <ul className="todo-list">
-        {todos.map((item) => {
+        {todos.map((item, index) => {
           return (
             <li key={item.id}>
-              <label>
-                <input
-                  type="checkbox"
-                  value={item.isCompleted}
-                  checked={item.isCompleted}
-                  onChange={(e) => {
-                    onModifyTodo(item.id, item.todo, e.target.checked);
-                  }}
-                />
-                <span>{item.todo}</span>
-              </label>
-              <button
-                data-testid="modify-button"
-                onClick={() => {
-                  onVisibleModifyTodo(item.id, item.todo);
-                }}
-              >
-                수정
-              </button>
-              <button
-                data-testid="delete-button"
-                onClick={() => {
-                  onDeleteTodo(item.id);
-                }}
-              >
-                삭제
-              </button>
               {visibleModify === item.id ? (
                 <div className="modify-todo">
-                  <input name="modifyTodo" value={modifyTodo} onChange={onChange} data-testid="modify-input" autoFocus />
-                  <button
-                    data-testid="submit-button"
-                    onClick={() => {
-                      if (visibleModify === null) {
-                        onModifyTodo(item.id, item.todo, item.isCompleted);
-                      } else {
-                        onModifyTodo(item.id, modifyTodo, item.isCompleted);
-                      }
-                    }}
-                  >
-                    제출
-                  </button>
-                  <button data-testid="cancel-button" onClick={() => setVisibleModify(null)}>
-                    취소
-                  </button>
+                  <label>
+                    <input
+                      type="checkbox"
+                      value={item.isCompleted}
+                      checked={item.isCompleted}
+                      onChange={(e) => {
+                        onModifyTodo(item.id, item.todo, e.target.checked);
+                      }}
+                    />
+                    <input
+                      name="modifyTodo"
+                      value={modifyTodo}
+                      onChange={onChange}
+                      data-testid="modify-input"
+                      autoFocus
+                      onKeyDown={(e) => {
+                        onModifyKeyDown(e, item.id, modifyTodo, item.isCompleted);
+                      }}
+                    />
+                  </label>
+                  <div>
+                    <button
+                      data-testid="submit-button"
+                      onClick={() => {
+                        if (visibleModify === null) {
+                          onModifyTodo(item.id, item.todo, item.isCompleted);
+                        } else {
+                          onModifyTodo(item.id, modifyTodo, item.isCompleted);
+                        }
+                      }}
+                    >
+                      제출
+                    </button>
+                    <button data-testid="cancel-button" onClick={() => setVisibleModify(null)}>
+                      취소
+                    </button>
+                  </div>
                 </div>
-              ) : null}
+              ) : (
+                <div>
+                  <div className="asdf">
+                    <span>#{index + 1}</span>
+                    <label>
+                      <input
+                        type="checkbox"
+                        value={item.isCompleted}
+                        checked={item.isCompleted}
+                        onChange={(e) => {
+                          onModifyTodo(item.id, item.todo, e.target.checked);
+                        }}
+                      />
+                      <span>{item.todo}</span>
+                    </label>
+                  </div>
+                  <div>
+                    <button
+                      data-testid="modify-button"
+                      onClick={() => {
+                        onVisibleModifyTodo(item.id, item.todo);
+                      }}
+                    >
+                      수정
+                    </button>
+                    <button
+                      data-testid="delete-button"
+                      onClick={() => {
+                        onDeleteTodo(item.id);
+                      }}
+                    >
+                      삭제
+                    </button>
+                  </div>
+                </div>
+              )}
             </li>
           );
         })}
