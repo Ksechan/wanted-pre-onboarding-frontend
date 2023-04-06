@@ -1,10 +1,6 @@
 # 원티드 프리온보딩 프론트엔드 선발 과제
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
 ## Available Scripts
-
-In the project directory, you can run:
 
 ### `yarn start`
 
@@ -67,5 +63,4 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 
 ### `yarn build` fails to minify
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-# wanted-pre-onboarding-frontend
+https://wanted-pre-onboarding-frontend-lime.vercel.app/
