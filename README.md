@@ -1,14 +1,9 @@
 # 원티드 프리온보딩 프론트엔드 선발 과제
 
-## Available Scripts
-
 ### `yarn start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+안녕하세요.
+원티드 프리온보딩 프론트엔드 선발 과제 레파지토리입니다.
 
 ### `yarn test`
 
