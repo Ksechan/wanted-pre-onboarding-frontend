@@ -25,4 +25,6 @@
 
 ## 원티드 선발 과제 배포링크
 
+ - Vercel을 사용하여 배포하였습니다
+
 [ 원티드 선발 과제 배포링크 ](https://wanted-pre-onboarding-frontend-lime.vercel.app/)
