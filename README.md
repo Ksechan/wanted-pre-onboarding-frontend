@@ -1,11 +1,9 @@
 # 원티드 프리온보딩 프론트엔드 선발 과제
 
-### `yarn start`
-
 안녕하세요.
 원티드 프리온보딩 프론트엔드 선발 과제 레파지토리입니다.
 
-### `yarn test`
+위의 `code` 버튼을 눌러 `git clone`을 합니다
 
 Launches the test runner in the interactive watch mode.\
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
