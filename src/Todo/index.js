@@ -151,27 +151,30 @@ const Todo = () => {
             <li key={item.id}>
               {visibleModify === item.id ? (
                 <div className="modify-todo">
-                  <label>
-                    <input
-                      type="checkbox"
-                      value={item.isCompleted}
-                      checked={item.isCompleted}
-                      onChange={(e) => {
-                        onModifyTodo(item.id, item.todo, e.target.checked);
-                      }}
-                    />
-                    <input
-                      name="modifyTodo"
-                      value={modifyTodo}
-                      onChange={onChange}
-                      data-testid="modify-input"
-                      autoFocus
-                      onKeyDown={(e) => {
-                        onModifyKeyDown(e, item.id, modifyTodo, item.isCompleted);
-                      }}
-                    />
-                  </label>
-                  <div>
+                  <div className="todo-name">
+                    <span>#{index + 1}</span>
+                    <label>
+                      <input
+                        type="checkbox"
+                        value={item.isCompleted}
+                        checked={item.isCompleted}
+                        onChange={(e) => {
+                          onModifyTodo(item.id, item.todo, e.target.checked);
+                        }}
+                      />
+                      <input
+                        name="modifyTodo"
+                        value={modifyTodo}
+                        onChange={onChange}
+                        data-testid="modify-input"
+                        autoFocus
+                        onKeyDown={(e) => {
+                          onModifyKeyDown(e, item.id, modifyTodo, item.isCompleted);
+                        }}
+                      />
+                    </label>
+                  </div>
+                  <div className="todo-button">
                     <button
                       data-testid="submit-button"
                       onClick={() => {
@@ -191,7 +194,7 @@ const Todo = () => {
                 </div>
               ) : (
                 <div>
-                  <div className="asdf">
+                  <div className="todo-name">
                     <span>#{index + 1}</span>
                     <label>
                       <input
@@ -205,7 +208,7 @@ const Todo = () => {
                       <span>{item.todo}</span>
                     </label>
                   </div>
-                  <div>
+                  <div className="todo-button">
                     <button
                       data-testid="modify-button"
                       onClick={() => {

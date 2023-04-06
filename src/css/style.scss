@@ -198,12 +198,13 @@ input {
     border: 1px solid $--color-border;
     border-radius: 6px;
     color: $--color-text-gray;
-    padding: 5px 12px;
+    padding: 0 5px;
     margin-left: 4px;
+    font-size: 14px;
   }
 }
 
-.asdf {
+.todo-name {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -217,8 +218,17 @@ input {
     display: flex;
     align-items: flex-start;
 
+    span {
+      font-size: 14px;
+    }
+
     input {
       height: 24px;
     }
   }
+}
+
+.todo-button {
+  display: flex;
+  justify-content: flex-end;
 }
