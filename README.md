@@ -63,4 +63,4 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 
 ### `yarn build` fails to minify
 
-https://wanted-pre-onboarding-frontend-lime.vercel.app/
+[ 원티드 선발 과제 배포 링크 ](https://wanted-pre-onboarding-frontend-lime.vercel.app/)
